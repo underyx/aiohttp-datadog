@@ -12,7 +12,7 @@ with io.open('README.rst') as f:
 
 setup(
     name='aiohttp-datadog',
-    version='0.1.0',
+    version='0.2.0',
     url='https://github.com/underyx/aiohttp-datadog',
     author='Bence Nagy',
     author_email='bence@underyx.me',
