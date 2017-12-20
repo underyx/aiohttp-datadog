@@ -17,8 +17,8 @@ Usage
     app = web.Application(
         middlewares=(
             DatadogMiddleware('my_app', {
-                'statsd_host': 'localhost',
-                'statsd_port': 8126,
+                'host': 'localhost',
+                'port': 8126,
             }),
             # ...
         ),
