@@ -1,16 +1,15 @@
 from functools import partial
 
-import datadog
+from datadog import DogStatsd
 
 
 class DatadogMiddleware:
 
-    def __init__(self, app_prefix, datadog_kwargs=None):
-        if datadog_kwargs is None:
-            datadog_kwargs = {}
+    def __init__(self, app_prefix, dogstatsd_kwargs=None):
+        if dogstatsd_kwargs is None:
+            dogstatsd_kwargs = {}
 
-        datadog.initialize(**datadog_kwargs)
-
+        self.dogstatsd = DogStatsd(**dogstatsd_kwargs)
         self.app_prefix = app_prefix
 
     async def __call__(self, app, handler):
@@ -24,5 +23,6 @@ class DatadogMiddleware:
             'http_path:{0}'.format(request.path),
             'request_type:{0}'.format(request.GET.getone('type', None)),
         ]
-        with datadog.statsd.timed('{0}.request.time'.format(self.app_prefix), tags=tags):
+
+        with self.dogstatsd.timed('{0}.request.time'.format(self.app_prefix), tags=tags):
             return await handler(request)
