@@ -16,13 +16,12 @@ class DatadogMiddleware:
         return partial(self.middleware, handler)
 
     async def middleware(self, handler, request):
-        tags = [
+        with self.dogstatsd.timed('{0}.request.time'.format(self.app_prefix), tags=self.get_tags(request)):
+            return await handler(request)
+
+    def get_tags(self, request):
+        return [
             'http_method:{0}'.format(request.method),
-            'http_version:{0}'.format(request.version),
             'http_host:{0}'.format(request.host),
             'http_path:{0}'.format(request.path),
-            'request_type:{0}'.format(request.GET.getone('type', None)),
         ]
-
-        with self.dogstatsd.timed('{0}.request.time'.format(self.app_prefix), tags=tags):
-            return await handler(request)
