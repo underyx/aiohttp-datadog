@@ -16,6 +16,7 @@ class CustomDatadogMiddleware(DatadogMiddleware):
         tags.append(f'http_version:{request.version}')
         return tags
 ```
+
 ## 0.2.0-1 (2017-12-20)
 
 Added changelog entry for 0.2.0.

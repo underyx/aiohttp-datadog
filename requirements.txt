@@ -1,1 +1,2 @@
+aiohttp>=2.3
 datadog~=0.26.0

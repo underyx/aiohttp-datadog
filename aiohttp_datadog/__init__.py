@@ -1,8 +1,8 @@
-from functools import partial
-
+from aiohttp import web
 from datadog import DogStatsd
 
 
+@web.middleware
 class DatadogMiddleware:
     def __init__(self, app_prefix, dogstatsd_kwargs=None):
         if dogstatsd_kwargs is None:
@@ -11,10 +11,7 @@ class DatadogMiddleware:
         self.dogstatsd = DogStatsd(**dogstatsd_kwargs)
         self.app_prefix = app_prefix
 
-    async def __call__(self, app, handler):
-        return partial(self.middleware, handler)
-
-    async def middleware(self, handler, request):
+    async def __call__(self, request, handler):
         with self.dogstatsd.timed(
             "{0}.request.time".format(self.app_prefix), tags=self.get_tags(request)
         ):
