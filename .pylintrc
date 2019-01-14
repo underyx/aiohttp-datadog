@@ -20,6 +20,7 @@ disable =
   no-self-use,
   fixme,
   too-few-public-methods,
+  bad-continuation,
 
 [REPORTS]
 output-format=colorized
