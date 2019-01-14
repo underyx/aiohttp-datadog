@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.4.0 (2019-01-14)
+
+Use new-style middleware definition to get rid of aiohttp warnings.
+
 ## 0.3.0 (2018-02-15)
 
 :warning: Removed the Datadog tags `http_version`, `http_path`, and `request_type`.
