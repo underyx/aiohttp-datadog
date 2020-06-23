@@ -16,11 +16,39 @@ Usage
     from aiohttp_datadog import DatadogMiddleware
     app = web.Application(
         middlewares=(
-            DatadogMiddleware('my_app', {
-                'host': 'localhost',
-                'port': 8126,
-            }),
-            # ...
+            DatadogMiddleware(
+                "my_app",
+                {"host": "localhost", "port": 8126},
+            ),
+        ),
+    )
+
+If you're using a custom DogStatsd class,
+you can supply it via a keyword argument:
+
+.. code-block:: python
+
+    app = web.Application(
+        middlewares=(
+            DatadogMiddleware(
+                "my_app",
+                {"host": "localhost", "port": 8126},
+                dogstatsd_class=CatStatsd,
+            ),
+        ),
+    )
+
+Or if you're even more of a control freak,
+you can instantiate it yourself:
+
+.. code-block:: python
+
+    app = web.Application(
+        middlewares=(
+            DatadogMiddleware(
+                "my_app",
+                dogstatsd_instance=CatStatsd(meow=False),
+            ),
         ),
     )
 
