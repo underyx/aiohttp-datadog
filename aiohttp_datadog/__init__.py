@@ -4,11 +4,14 @@ from datadog import DogStatsd
 
 @web.middleware
 class DatadogMiddleware:
-    def __init__(self, app_prefix, dogstatsd_kwargs=None):
+    def __init__(self, app_prefix, dogstatsd=None, dogstatsd_kwargs=None):
         if dogstatsd_kwargs is None:
             dogstatsd_kwargs = {}
 
-        self.dogstatsd = DogStatsd(**dogstatsd_kwargs)
+        if dogstatsd:
+            self.dogstatsd = dogstatsd
+        else:
+            self.dogstatsd = DogStatsd(**dogstatsd_kwargs)
         self.app_prefix = app_prefix
 
     async def __call__(self, request, handler):
