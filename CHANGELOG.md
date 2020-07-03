@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.5.0 (2020-07-03)
+
+Allow passing a custom `dogstatsd_class` or `dogstatsd_instance`.
+
 ## 0.4.0 (2019-01-14)
 
 Use new-style middleware definition to get rid of aiohttp warnings.
